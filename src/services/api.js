@@ -25,13 +25,13 @@ api.interceptors.response.use(
     // Manejo centralizado de errores
     let respuestaError = {
       ok: false,
-      datos: null,
-      mensaje: 'Error desconocido',
+      data: null,
+      message: 'Error desconocido',
     };
 
     if (error.response) {
       // El servidor respondió con un código de estado fuera del rango 2xx
-      respuestaError.mensaje = error.response.data?.mensaje ||
+      respuestaError.message = error.response.data?.message ||
         `Error: ${error.response.status} ${error.response.statusText}`;
 
       if (error.response.status === 404) {

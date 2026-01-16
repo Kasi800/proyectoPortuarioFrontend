@@ -6,6 +6,7 @@ import ListadoDirectores from "./components/ListadoDirectores";
 import AltaDirector from "./components/AltaDirector";
 import EditarDirector from "./components/EditarDirector"
 import ListadoCardsDirectores from "./components/ListadoCardsDirectores";
+import PuertosPage from "./components/ListadoPuertos";
 
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       { index: true, Component: Inicio }, // Esto se ve en la ruta padre
       {
         path: "/directors",
-        element: <ListadoDirectores/>,
+        element: <ListadoDirectores />,
       },
       {
         path: "/directors/cards",
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/movies/new",
         element: <h1>Alta de peliculas</h1>,
+      },
+      {
+        path: "/puertos",
+        element: <PuertosPage />,
       },
     ],
   },

@@ -17,7 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
-import api from "../api";
+import api from "../services/api";
 
 function AltaDirector() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function AltaDirector() {
     async function fetchCreateDirector() {
       try {
         const respuesta = await api.post("/directors/", director);
-        
+
         setDialogMessage(respuesta.mensaje); // Mensaje
         setDialogSeverity("success"); // Color verde
         setOpenDialog(true); // Abrir el diálogo
@@ -119,16 +119,16 @@ function AltaDirector() {
     var patronURL = new RegExp(
       // valida protocolo
       "^(https?:\\/\\/)?" +
-        // valida nombre de dominio
-        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-        // valida OR direccion ip (v4)
-        "((\\d{1,3}\\.){3}\\d{1,3}))" +
-        // valida puerto y path
-        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-        // valida queries
-        "(\\?[;&a-z\\d%_.~+=-]*)?" +
-        // valida fragment locator
-        "(\\#[-a-z\\d_]*)?$",
+      // valida nombre de dominio
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      // valida OR direccion ip (v4)
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      // valida puerto y path
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      // valida queries
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      // valida fragment locator
+      "(\\#[-a-z\\d_]*)?$",
       "i"
     );
     return !!patronURL.test(urlString);

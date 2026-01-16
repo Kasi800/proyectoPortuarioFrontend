@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import api from "../api";
+import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 function ListadoDirectores() {
@@ -42,7 +42,7 @@ function ListadoDirectores() {
     try {
       await api.delete("/directors/" + id_director);
 
-      const datos_nuevos = datos.filter( director => director.id_director != id_director);
+      const datos_nuevos = datos.filter(director => director.id_director != id_director);
 
       // Actualizamos los datos de directores sin el que hemos borrado
       setDatos(datos_nuevos);
@@ -118,7 +118,7 @@ function ListadoDirectores() {
                     <DeleteIcon />
                   </Button>
                   <Button
-                    sx={{ml: 1}}
+                    sx={{ ml: 1 }}
                     variant="contained"
                     color="primary"
                     onClick={() => navigate('/directors/edit/' + row.id_director)}
