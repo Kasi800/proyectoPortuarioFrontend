@@ -6,7 +6,10 @@ import ListadoDirectores from "./components/ListadoDirectores";
 import AltaDirector from "./components/AltaDirector";
 import EditarDirector from "./components/EditarDirector"
 import ListadoCardsDirectores from "./components/ListadoCardsDirectores";
-import PuertosPage from "./components/ListadoPuertos";
+import ListadoPuertos from "./components/ListadoPuertos";
+import FormularioPuerto from "./components/FormularioPuerto";
+import ListadoMuelles from "./components/ListadoMuelles";
+import FormularioMuelle from "./components/FormularioMuelle";
 
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
@@ -45,7 +48,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/puertos",
-        element: <PuertosPage />,
+        element: <ListadoPuertos />,
+      },
+      {
+        path: "/puertos/new",
+        element: <FormularioPuerto />,
+      },
+      {
+        path: "/puertos/edit/:id",
+        element: <FormularioPuerto />,
+      },
+      {
+        path: "/muelles",
+        element: <ListadoMuelles />,
+      },
+      {
+        path: "/muelles/new",
+        element: <FormularioMuelle />,
+      },
+      {
+        path: "/muelles/edit/:id",
+        element: <FormularioMuelle />,
       },
     ],
   },
