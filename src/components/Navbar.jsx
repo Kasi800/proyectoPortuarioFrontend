@@ -8,24 +8,23 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import MovieTwoToneIcon from "@mui/icons-material/MovieTwoTone";
+import SailingIcon from '@mui/icons-material/Sailing';
 import { Link } from "react-router";
 import Divider from "@mui/material/Divider";
 import ListSubheader from "@mui/material/ListSubheader";
 
 function Navbar() {
-  const [anclaMenuDirectores, setAnclaMenuDirectores] = React.useState(null);
-  const [anclaMenuPeliculas, setAnclaMenuPeliculas] = React.useState(null);
+  const [anclaMenuPuertos, setAnclaMenuPuertos] = React.useState(null);
+  const [anclaMenuMuelles, setAnclaMenuMuelles] = React.useState(null);
   const [anclaMenuXS, setAnclaMenuXS] = React.useState(null);
 
-  const handleClickMenuDirectores = (event) => {
-    setAnclaMenuDirectores(event.currentTarget);
+  const handleClickMenuPuertos = (event) => {
+    setAnclaMenuPuertos(event.currentTarget);
   };
 
-  const handleClickMenuPeliculas = (event) => {
-    setAnclaMenuPeliculas(event.currentTarget);
+  const handleClickMenuMuelles = (event) => {
+    setAnclaMenuMuelles(event.currentTarget);
   };
 
   const handleClickMenuXS = (event) => {
@@ -33,8 +32,8 @@ function Navbar() {
   };
 
   const handleCloseNavMenu = () => {
-    setAnclaMenuDirectores(null);
-    setAnclaMenuPeliculas(null);
+    setAnclaMenuPuertos(null);
+    setAnclaMenuMuelles(null);
     setAnclaMenuXS(null);
   };
 
@@ -72,34 +71,34 @@ function Navbar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              <ListSubheader>Menú Directores</ListSubheader>
+              <ListSubheader>Menú Puertos</ListSubheader>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/directors/new" style={linkStyle}>
+                <Link to="/puertos/new" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Alta de directores
+                    Alta de puertos
                   </Typography>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/directors" style={linkStyle}>
+                <Link to="/puertos" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Listado de directores
+                    Listado de puertos
                   </Typography>
                 </Link>
               </MenuItem>
               <Divider />
-              <ListSubheader>Menú Películas</ListSubheader>
+              <ListSubheader>Menú Muelles</ListSubheader>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/movies/new" style={linkStyle}>
+                <Link to="/muelles/new" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Alta de peliculas
+                    Alta de muelles
                   </Typography>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/movies" style={linkStyle}>
+                <Link to="/muelles" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Listado de peliculas
+                    Listado de muelles
                   </Typography>
                 </Link>
               </MenuItem>
@@ -107,7 +106,7 @@ function Navbar() {
           </Box>
 
           {/* Logo y nombre de la web */}
-          <MovieTwoToneIcon />
+          <SailingIcon />
           <Typography
             variant="h6"
             noWrap
@@ -122,21 +121,21 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            MOVIES DB
+            Puertos DB
           </Typography>
 
           {/* Menú para resolución md */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {/* Menú para directores en md */}
+            {/* Menú para puertos en md */}
             <Button
-              onClick={handleClickMenuDirectores}
+              onClick={handleClickMenuPuertos}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              Directores
+              Puertos
             </Button>
             <Menu
-              id="menu-directores"
-              anchorEl={anclaMenuDirectores}
+              id="menu-puertos"
+              anchorEl={anclaMenuPuertos}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
@@ -146,35 +145,35 @@ function Navbar() {
                 vertical: "top",
                 horizontal: "left",
               }}
-              open={Boolean(anclaMenuDirectores)}
+              open={Boolean(anclaMenuPuertos)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "none", md: "flex" } }}
             >
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/directors/new" style={linkStyle}>
+                <Link to="/puertos/new" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Alta de directores
+                    Alta de puertos
                   </Typography>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/directors" style={linkStyle}>
+                <Link to="/puertos" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Listado de directores
+                    Listado de puertos
                   </Typography>
                 </Link>
               </MenuItem>
             </Menu>
-            {/* Menú para peliculas en md */}
+            {/* Menú para muelles en md */}
             <Button
-              onClick={handleClickMenuPeliculas}
+              onClick={handleClickMenuMuelles}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              Peliculas
+              Muelles
             </Button>
             <Menu
-              id="menu-peliculas"
-              anchorEl={anclaMenuPeliculas}
+              id="menu-muelles"
+              anchorEl={anclaMenuMuelles}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
@@ -184,21 +183,21 @@ function Navbar() {
                 vertical: "top",
                 horizontal: "left",
               }}
-              open={Boolean(anclaMenuPeliculas)}
+              open={Boolean(anclaMenuMuelles)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "none", md: "flex" } }}
             >
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/movies/new" style={linkStyle}>
+                <Link to="/muelles/new" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Alta de peliculas
+                    Alta de muelles
                   </Typography>
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link to="/movies" style={linkStyle}>
+                <Link to="/muelles" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
-                    Listado de peliculas
+                    Listado de muelles
                   </Typography>
                 </Link>
               </MenuItem>

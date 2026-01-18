@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import puertoService from '../services/puertoService';
+import muelleService from '../services/muelleService';
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,27 +16,27 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from 'react-router-dom';
 import { Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-const ListadoPuertos = () => {
-    const [puertos, setPuertos] = useState([]);
+const ListadoMuelles = () => {
+    const [muelles, setMuelles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function cargarPuertos() {
+        async function cargarMuelles() {
             try {
                 setLoading(true);
-                const data = await puertoService.getAll();
-                setPuertos(data);
+                const data = await muelleService.getAll();
+                setMuelles(data);
             } catch (err) {
                 // Error ya manejado en el servicio
-                console.error('Error al cargar puertos:', err.message);
+                console.error('Error al cargar muelles:', err.message);
             } finally {
                 setLoading(false);
             }
         };
-        cargarPuertos();
+        cargarMuelles();
     }, []);
 
     const handleConfirmDelete = async () => {
@@ -44,12 +44,12 @@ const ListadoPuertos = () => {
         setIdToDelete(null);
 
         try {
-            await puertoService.delete(idToDelete);
+            await muelleService.delete(idToDelete);
 
-            // Actualizamos los datos de puertos sin el que hemos borrado
-            setPuertos(puertos.filter(p => p.id_puerto !== idToDelete));
+            // Actualizamos los datos de muelles sin el que hemos borrado
+            setMuelles(muelles.filter(p => p.id_muelle !== idToDelete));
         } catch (error) {
-            alert("No se pudo borrar el puerto: " + error.message);
+            alert("No se pudo borrar el muelle: " + error.message);
         }
     };
 
@@ -69,7 +69,7 @@ const ListadoPuertos = () => {
     return (
         <>
             <Typography variant="h4" align="center" sx={{ my: 3 }}>
-                Listado de puertos
+                Listado de muelles
             </Typography>
 
             <TableContainer component={Paper}>
@@ -77,32 +77,32 @@ const ListadoPuertos = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Nombre</TableCell>
-                            <TableCell align="center">Ciudad</TableCell>
-                            <TableCell>País</TableCell>
-                            <TableCell>Capacidad TEU</TableCell>
-                            <TableCell>Activo</TableCell>
-                            <TableCell>Fecha de Inauguración</TableCell>
-                            <TableCell>Profundidad media</TableCell>
+                            <TableCell align="center">Puerto</TableCell>
+                            <TableCell>Longitud (m)</TableCell>
+                            <TableCell>Calado (m)</TableCell>
+                            <TableCell>Operativo</TableCell>
+                            <TableCell>Fecha de Construcción</TableCell>
+                            <TableCell>Tipo</TableCell>
                             <TableCell>Acciones</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {puertos.map((row) => (
-                            <TableRow key={row.id_puerto}>
+                        {muelles.map((row) => (
+                            <TableRow key={row.id_muelle}>
                                 <TableCell>{row.nombre}</TableCell>
-                                <TableCell align="center">{row.ciudad}</TableCell>
-                                <TableCell>{row.pais}</TableCell>
-                                <TableCell>{row.capacidad_teu}</TableCell>
+                                <TableCell align="center">{row.id_puerto}</TableCell>
+                                <TableCell>{row.longitud_m}</TableCell>
+                                <TableCell>{row.calado_m}</TableCell>
                                 <TableCell>
-                                    <Checkbox checked={row.activo} />
+                                    <Checkbox checked={row.operativo} />
                                 </TableCell>
-                                <TableCell>{row.fecha_inauguracion}</TableCell>
-                                <TableCell>{row.profundidad_media}</TableCell>
+                                <TableCell>{row.fecha_construccion}</TableCell>
+                                <TableCell>{row.tipo}</TableCell>
                                 <TableCell>
                                     <Button
                                         variant="contained"
                                         color="error"
-                                        onClick={() => handleClickOpen(row.id_puerto)}
+                                        onClick={() => handleClickOpen(row.id_muelle)}
                                     >
                                         <DeleteIcon />
                                     </Button>
@@ -110,7 +110,7 @@ const ListadoPuertos = () => {
                                         sx={{ ml: 1 }}
                                         variant="contained"
                                         color="primary"
-                                        onClick={() => navigate('/puertos/edit/' + row.id_puerto)}
+                                        onClick={() => navigate('/muelles/edit/' + row.id_muelle)}
                                     >
                                         <EditIcon />
                                     </Button>
@@ -130,7 +130,7 @@ const ListadoPuertos = () => {
                 <DialogTitle id="delete-dialog-title">¿Confirmar borrado?</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="delete-dialog-description">
-                        Esta acción no se puede deshacer. ¿Deseas eliminar el puerto seleccionado?
+                        Esta acción no se puede deshacer. ¿Deseas eliminar el muelle seleccionado?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -149,4 +149,4 @@ const ListadoPuertos = () => {
     );
 };
 
-export default ListadoPuertos;
+export default ListadoMuelles;
