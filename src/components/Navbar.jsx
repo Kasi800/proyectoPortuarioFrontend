@@ -13,11 +13,18 @@ import SailingIcon from '@mui/icons-material/Sailing';
 import { Link } from "react-router";
 import Divider from "@mui/material/Divider";
 import ListSubheader from "@mui/material/ListSubheader";
+import { useTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4'; // Luna
+import Brightness7Icon from '@mui/icons-material/Brightness7'; // Sol
+import { useColorMode } from '../context/ThemeContext';
 
 function Navbar() {
   const [anclaMenuPuertos, setAnclaMenuPuertos] = React.useState(null);
   const [anclaMenuMuelles, setAnclaMenuMuelles] = React.useState(null);
   const [anclaMenuXS, setAnclaMenuXS] = React.useState(null);
+
+  const theme = useTheme();
+  const { toggleColorMode } = useColorMode();
 
   const handleClickMenuPuertos = (event) => {
     setAnclaMenuPuertos(event.currentTarget);
@@ -37,7 +44,7 @@ function Navbar() {
     setAnclaMenuXS(null);
   };
 
-  const linkStyle = { color: "black", textDecoration: "none" };
+  const linkStyle = { color: "inherit", textDecoration: "none" };
 
   return (
     <AppBar position="static">
@@ -230,6 +237,12 @@ function Navbar() {
                 </Link>
               </MenuItem>
             </Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <IconButton onClick={toggleColorMode} color="inherit" title="Cambiar tema">
+              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>

@@ -110,7 +110,7 @@ const BusquedaMuelles = () => {
                     Búsqueda Parametrizada de Muelles
                 </Typography>
 
-                <Paper sx={{ p: 3, mb: 4, backgroundColor: '#f5f5f5' }}>
+                <Paper sx={{ p: 3, mb: 4 }}>
                     <Grid container spacing={2} alignItems="center">
                         <Grid item xs={12} md={5}>
                             <TextField
@@ -185,7 +185,7 @@ const BusquedaMuelles = () => {
                         <TableContainer component={Paper}>
                             <Table>
                                 <TableHead>
-                                    <TableRow sx={{ backgroundColor: '#eeeeee' }}>
+                                    <TableRow sx={{ backgroundColor: 'background.TableRow' }}>
                                         <TableCell>Nombre</TableCell>
                                         <TableCell>Puerto</TableCell>
                                         <TableCell>Longitud (m)</TableCell>

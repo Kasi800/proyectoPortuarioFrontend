@@ -101,7 +101,7 @@ const ListadoMuelles = () => {
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
-                        <TableRow sx={{ backgroundColor: '#eeeeee' }}>
+                        <TableRow sx={{ backgroundColor: 'background.TableRow' }}>
                             <TableCell>Nombre</TableCell>
                             <TableCell align="center">Puerto</TableCell>
                             <TableCell>Longitud (m)</TableCell>

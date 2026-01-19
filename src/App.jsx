@@ -11,6 +11,7 @@ import BusquedaMuelles from './components/BusquedaMuelles';
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
 import BusquedaPuertos from "./components/BusquedaPuertos";
+import { ThemeContextProvider } from "./context/ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <ThemeContextProvider>
+        <RouterProvider router={router} />
+      </ThemeContextProvider>
     </>
   );
 }

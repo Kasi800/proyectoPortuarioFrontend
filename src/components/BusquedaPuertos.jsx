@@ -4,14 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    Checkbox, Typography, Button, Box, TextField, Grid, CircularProgress,
-    Alert, Chip,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions,
-    MenuItem
+    Checkbox, Typography, Button, Box, TextField, Grid, CircularProgress, Alert,
+    Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, MenuItem
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -104,13 +98,14 @@ const BusquedaPuertos = () => {
                     Búsqueda Parametrizada de Puertos
                 </Typography>
 
-                <Paper sx={{ p: 3, mb: 4, backgroundColor: '#f8f9fa' }} elevation={2}>
+                <Paper sx={{ p: 3, mb: 4 }} elevation={2}>
                     <Grid container spacing={2} alignItems="center">
 
                         <Grid item xs={12} md={4}>
                             <TextField
                                 fullWidth
                                 label="Ciudad"
+                                helperText="Filtra los puertos por ciudad"
                                 name="ciudad"
                                 value={filtros.ciudad}
                                 onChange={handleChange}
@@ -123,6 +118,7 @@ const BusquedaPuertos = () => {
                             <TextField
                                 fullWidth
                                 label="País"
+                                helperText="Filtra los puertos por país"
                                 name="pais"
                                 value={filtros.pais}
                                 onChange={handleChange}
@@ -136,6 +132,7 @@ const BusquedaPuertos = () => {
                                 select
                                 fullWidth
                                 label="Estado Operativo"
+                                helperText="Filtra los puertos por estado operativo"
                                 name="activo"
                                 value={filtros.activo}
                                 onChange={handleChange}
@@ -186,7 +183,7 @@ const BusquedaPuertos = () => {
                         <TableContainer component={Paper}>
                             <Table>
                                 <TableHead>
-                                    <TableRow sx={{ backgroundColor: '#eeeeee' }}>
+                                    <TableRow sx={{ backgroundColor: 'background.TableRow' }}>
                                         <TableCell>Nombre</TableCell>
                                         <TableCell>Ciudad</TableCell>
                                         <TableCell>País</TableCell>
