@@ -86,6 +86,13 @@ function Navbar() {
                   </Typography>
                 </Link>
               </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/puertos/search" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de puertos Parametrizado
+                  </Typography>
+                </Link>
+              </MenuItem>
               <Divider />
               <ListSubheader>Menú Muelles</ListSubheader>
               <MenuItem onClick={handleCloseNavMenu}>
@@ -99,6 +106,13 @@ function Navbar() {
                 <Link to="/muelles" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
                     Listado de muelles
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/muelles/search" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de muelles Parametrizado
                   </Typography>
                 </Link>
               </MenuItem>
@@ -163,6 +177,13 @@ function Navbar() {
                   </Typography>
                 </Link>
               </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/puertos/search" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de puertos parametrizado
+                  </Typography>
+                </Link>
+              </MenuItem>
             </Menu>
             {/* Menú para muelles en md */}
             <Button
@@ -198,6 +219,13 @@ function Navbar() {
                 <Link to="/muelles" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
                     Listado de muelles
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/muelles/search" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de muelles parametrizado
                   </Typography>
                 </Link>
               </MenuItem>

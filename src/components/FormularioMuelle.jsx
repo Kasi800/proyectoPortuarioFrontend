@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import muelleService from '../services/muelleService';
 import puertoService from '../services/puertoService';
-import { TextField, Button, Checkbox, FormControlLabel, 
-    Paper, Typography, Grid, 
-    MenuItem} from "@mui/material";
+import {
+    TextField, Button, Checkbox, FormControlLabel,
+    Paper, Typography, Grid,
+    MenuItem
+} from "@mui/material";
 
 const FormularioMuelle = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    
+
     // Estado inicial del formulario
     const [formData, setFormData] = useState({
         nombre: '',
@@ -36,7 +38,7 @@ const FormularioMuelle = () => {
                     setFormData(data);
                 }
             } catch (error) {
-                alert("Error cargando los datos.");
+                alert("Error cargando los datos:" + error.message);
                 navigate('/muelles');
             }
         }
@@ -72,11 +74,11 @@ const FormularioMuelle = () => {
             <Typography variant="h5" sx={{ mb: 3 }}>
                 {id ? 'Editar Muelle' : 'Nuevo Muelle'}
             </Typography>
-            
+
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Nombre" name="nombre" 
+                        <TextField fullWidth label="Nombre" name="nombre"
                             value={formData.nombre} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
@@ -98,28 +100,28 @@ const FormularioMuelle = () => {
                         </TextField>
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth type="number" label="Longitud (m)" name="longitud_m" 
+                        <TextField fullWidth type="number" label="Longitud (m)" name="longitud_m"
                             value={formData.longitud_m} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth type="number" label="Calado (m)" name="calado_m" 
+                        <TextField fullWidth type="number" label="Calado (m)" name="calado_m"
                             value={formData.calado_m} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth label="Tipo" name="tipo" 
+                        <TextField fullWidth label="Tipo" name="tipo"
                             value={formData.tipo} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth type="date" label="Fecha de Construcción" name="fecha_construccion" 
-                            value={formData.fecha_construccion} onChange={handleChange} InputLabelProps={{ shrink: true }} required />
+                        <TextField fullWidth type="date" label="Fecha de Construcción" name="fecha_construccion"
+                            value={formData.fecha_construccion} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
-                            control={<Checkbox checked={formData.activo} onChange={handleChange} name="activo" />}
+                            control={<Checkbox checked={formData.operativo} onChange={handleChange} name="operativo" />}
                             label="Muelle Activo / Operativo"
                         />
                     </Grid>
-                    
+
                     <Grid item xs={12} sx={{ mt: 2, display: 'flex', gap: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
                             Guardar

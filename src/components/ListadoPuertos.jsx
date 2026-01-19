@@ -1,27 +1,24 @@
 import { useEffect, useState } from 'react';
 import puertoService from '../services/puertoService';
+import { useNavigate } from 'react-router-dom';
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import {
+    Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+    Checkbox, Typography, Button
+} from '@mui/material';
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useNavigate } from 'react-router-dom';
-import { Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const ListadoPuertos = () => {
+    const navigate = useNavigate();
+
     const [puertos, setPuertos] = useState([]);
     const [loading, setLoading] = useState(true);
+
     const [open, setOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         async function cargarPuertos() {
@@ -40,8 +37,7 @@ const ListadoPuertos = () => {
     }, []);
 
     const handleConfirmDelete = async () => {
-        setOpen(false);
-        setIdToDelete(null);
+        handleClose();
 
         try {
             await puertoService.delete(idToDelete);
@@ -51,6 +47,11 @@ const ListadoPuertos = () => {
         } catch (error) {
             alert("No se pudo borrar el puerto: " + error.message);
         }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setIdToDelete(null);
     };
 
     const handleClickOpen = (id) => {
@@ -94,7 +95,7 @@ const ListadoPuertos = () => {
                                 <TableCell>{row.pais}</TableCell>
                                 <TableCell>{row.capacidad_teu}</TableCell>
                                 <TableCell>
-                                    <Checkbox checked={row.activo} />
+                                    <Checkbox checked={row.activo} disabled />
                                 </TableCell>
                                 <TableCell>{row.fecha_inauguracion}</TableCell>
                                 <TableCell>{row.profundidad_media}</TableCell>
@@ -123,7 +124,7 @@ const ListadoPuertos = () => {
 
             <Dialog
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={handleClose}
                 aria-labelledby="delete-dialog-title"
                 aria-describedby="delete-dialog-description"
             >
@@ -142,7 +143,7 @@ const ListadoPuertos = () => {
                     >
                         Borrar
                     </Button>
-                    <Button onClick={() => setOpen(false)}>Cancelar</Button>
+                    <Button onClick={handleClose}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
         </>
