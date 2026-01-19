@@ -1,0 +1,191 @@
+import { useEffect, useState } from 'react';
+import muelleService from '../services/muelleService';
+import { useNavigate } from 'react-router-dom';
+
+import {
+    Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
+    DialogTitle, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead,
+    TableRow, Paper, Checkbox, Typography, Button,
+    Grid,
+    Card,
+    CardMedia,
+    CardContent,
+    Chip,
+    CardActions
+} from '@mui/material';
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
+const ListadoMuelles = () => {
+    const navigate = useNavigate();
+
+    const [muelles, setMuelles] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const [open, setOpen] = useState(false);
+    const [idToDelete, setIdToDelete] = useState(null);
+
+    useEffect(() => {
+        async function cargarMuelles() {
+            try {
+                setLoading(true);
+
+                const data = await muelleService.getFiltered({
+                    limit: 500,
+                });
+
+                if (data.rows) {
+                    setMuelles(data.rows);
+                } else {
+                    setMuelles(data);
+                }
+            } catch (err) {
+                // Error ya manejado en el servicio
+                console.error('Error al cargar muelles:', err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        cargarMuelles();
+    }, []);
+
+    const handleConfirmDelete = async () => {
+        handleClose();
+
+        try {
+            await muelleService.delete(idToDelete);
+
+            // Actualizamos los datos de muelles sin el que hemos borrado
+            setMuelles(muelles.filter(p => p.id_muelle !== idToDelete));
+        } catch (error) {
+            alert("No se pudo borrar el muelle: " + error.message);
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setIdToDelete(null);
+    };
+
+    const handleClickOpen = (id) => {
+        setIdToDelete(id);
+        setOpen(true);
+    };
+
+    const DetailRow = ({ label, value, unit }) => (
+    <Box>
+        <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
+        {label}:
+        </Typography>
+        <Typography variant="body1" className="font-medium capitalize" sx={{ textAlign: 'right' }}>
+        {value} {unit}
+        </Typography>
+    </Box>
+    );
+
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
+
+    return (
+        <>
+            <Typography variant="h4" align="center" sx={{ my: 3 }}>
+                Listado de muelles
+            </Typography>
+
+            <Grid container spacing={1} >
+                {muelles.map((row) => (
+                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                        <Card>
+                            <CardMedia
+                                sx={{ height: 180 }}
+                                image="https://images.pexels.com/photos/10186985/pexels-photo-10186985.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                title={"Muelle " + row.id_muelle}
+                            />
+                            <CardContent>
+                                <Box className="flex justify-between items-start mb-4 border-b pb-3">
+                                    <Box>
+                                        <Typography variant="h5" component="div" className="font-extrabold text-gray-800">
+                                            {row.nombre}
+                                        </Typography>
+                                        <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
+                                            {row.id_puerto_puerto.nombre}
+                                        </Typography>
+                                    </Box>
+                                    <Chip
+                                        label={row.operativo ? 'Operativo' : 'No Operativo'}
+                                        color={row.operativo ? 'success' : 'error'}
+                                        variant="filled"
+                                        size="medium"
+                                        sx={{ fontWeight: 'bold' }}
+                                    />
+                                </Box>
+
+                                <Box >
+                                    <DetailRow label="Tipo" value={row.tipo} />
+                                    <DetailRow label="Longitud" value={row.longitud_m} unit="m" />
+                                    <DetailRow label="Calado" value={row.calado_m} unit="m" />
+                                    <DetailRow label="Construcción" value={row.fecha_construccion} />
+                                </Box>
+                            </CardContent>
+
+                            <CardActions>
+                                <Button 
+                                    size="small" 
+                                    startIcon={<DeleteIcon />}
+                                    variant="contained"
+                                    color="error"
+                                    onClick={() => handleClickOpen(row.id_muelle)}
+                                    sx={{ mr: 1 }}
+                                >
+                                    Borrar
+                                </Button>
+                                <Button 
+                                    size="small" 
+                                    startIcon={<EditIcon />}
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => navigate('/muelles/edit/' + row.id_muelle)}
+                                >
+                                    Editar
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="delete-dialog-title"
+                aria-describedby="delete-dialog-description"
+            >
+                <DialogTitle id="delete-dialog-title">¿Confirmar borrado?</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="delete-dialog-description">
+                        Esta acción no se puede deshacer. ¿Deseas eliminar el muelle seleccionado?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleConfirmDelete}
+                        color="error"
+                        variant="contained"
+                        autoFocus
+                    >
+                        Borrar
+                    </Button>
+                    <Button onClick={handleClose}>Cancelar</Button>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
+};
+
+export default ListadoMuelles;

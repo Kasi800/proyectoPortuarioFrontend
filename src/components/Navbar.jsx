@@ -123,6 +123,13 @@ function Navbar() {
                   </Typography>
                 </Link>
               </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/muelles/cards" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de muelles Cards
+                  </Typography>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
 
@@ -233,6 +240,13 @@ function Navbar() {
                 <Link to="/muelles/search" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
                     Listado de muelles parametrizado
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/muelles/cards" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Listado de muelles cards
                   </Typography>
                 </Link>
               </MenuItem>

@@ -5,6 +5,7 @@ import Inicio from "./components/Inicio";
 import ListadoPuertos from "./components/ListadoPuertos";
 import FormularioPuerto from "./components/FormularioPuerto";
 import ListadoMuelles from "./components/ListadoMuelles";
+import ListadoMuellesCards from "./components/ListadoMuellesCards";
 import FormularioMuelle from "./components/FormularioMuelle";
 import BusquedaMuelles from './components/BusquedaMuelles';
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/muelles",
         element: <ListadoMuelles />,
+      },
+      {
+        path: "/muelles/cards",
+        element: <ListadoMuellesCards />,
       },
       {
         path: "/muelles/new",
