@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import puertoService from '../services/puertoService';
-import { TextField, Button, Checkbox, FormControlLabel, 
-    Paper, Typography, Grid } from "@mui/material";
+import {
+    TextField, Button, Checkbox, FormControlLabel,
+    Paper, Typography, Grid
+} from "@mui/material";
 
 const FormularioPuerto = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    
+
     // Estado inicial del formulario
     const [formData, setFormData] = useState({
         nombre: '',
@@ -25,6 +27,7 @@ const FormularioPuerto = () => {
             const cargarPuerto = async () => {
                 try {
                     const data = await puertoService.getById(id);
+
                     // Aseguramos que los datos encajen en el form
                     setFormData(data);
                 } catch (error) {
@@ -65,32 +68,32 @@ const FormularioPuerto = () => {
             <Typography variant="h5" sx={{ mb: 3 }}>
                 {id ? 'Editar Puerto' : 'Nuevo Puerto'}
             </Typography>
-            
+
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Nombre" name="nombre" 
+                        <TextField fullWidth label="Nombre" name="nombre"
                             value={formData.nombre} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth label="Ciudad" name="ciudad" 
+                        <TextField fullWidth label="Ciudad" name="ciudad"
                             value={formData.ciudad} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth label="País" name="pais" 
+                        <TextField fullWidth label="País" name="pais"
                             value={formData.pais} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth type="number" label="Capacidad (TEU)" name="capacidad_teu" 
+                        <TextField fullWidth type="number" label="Capacidad (TEU)" name="capacidad_teu"
                             value={formData.capacidad_teu} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth type="number" label="Profundidad (m)" name="profundidad_media" 
+                        <TextField fullWidth type="number" label="Profundidad (m)" name="profundidad_media"
                             value={formData.profundidad_media} onChange={handleChange} inputProps={{ step: "0.01" }} required />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth type="date" label="Fecha Inauguración" name="fecha_inauguracion" 
-                            value={formData.fecha_inauguracion} onChange={handleChange} InputLabelProps={{ shrink: true }} required />
+                        <TextField fullWidth type="date" label="Fecha Inauguración" name="fecha_inauguracion"
+                            value={formData.fecha_inauguracion} onChange={handleChange} slotProps={{ inputLabel: { shrink: true } }} required />
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
@@ -98,7 +101,7 @@ const FormularioPuerto = () => {
                             label="Puerto Activo / Operativo"
                         />
                     </Grid>
-                    
+
                     <Grid item xs={12} sx={{ mt: 2, display: 'flex', gap: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
                             Guardar

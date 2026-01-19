@@ -25,7 +25,7 @@ const ListadoPuertos = () => {
             try {
                 setLoading(true);
                 const data = await puertoService.getAll();
-                setPuertos(data);
+                setPuertos(data.rows);
             } catch (err) {
                 // Error ya manejado en el servicio
                 console.error('Error al cargar puertos:', err.message);
@@ -74,9 +74,9 @@ const ListadoPuertos = () => {
             </Typography>
 
             <TableContainer component={Paper}>
-                <Table stickyHeader aria-label="simple table">
+                <Table>
                     <TableHead>
-                        <TableRow>
+                        <TableRow sx={{ backgroundColor: '#eeeeee' }}>
                             <TableCell>Nombre</TableCell>
                             <TableCell align="center">Ciudad</TableCell>
                             <TableCell>País</TableCell>
@@ -90,7 +90,7 @@ const ListadoPuertos = () => {
                     <TableBody>
                         {puertos.map((row) => (
                             <TableRow key={row.id_puerto}>
-                                <TableCell>{row.nombre}</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold' }}>{row.nombre}</TableCell>
                                 <TableCell align="center">{row.ciudad}</TableCell>
                                 <TableCell>{row.pais}</TableCell>
                                 <TableCell>{row.capacidad_teu}</TableCell>

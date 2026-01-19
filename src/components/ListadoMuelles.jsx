@@ -94,72 +94,70 @@ const ListadoMuelles = () => {
 
     return (
         <>
-            <Paper sx={{ mx: 'auto', maxWidth: '95%', mb: 4 }}>
-                <Typography variant="h4" align="center" sx={{ my: 3 }}>
-                    Listado de muelles
-                </Typography>
+            <Typography variant="h4" align="center" sx={{ my: 3 }}>
+                Listado de muelles
+            </Typography>
 
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow sx={{ backgroundColor: '#eeeeee' }}>
-                                <TableCell>Nombre</TableCell>
-                                <TableCell align="center">Puerto</TableCell>
-                                <TableCell>Longitud (m)</TableCell>
-                                <TableCell>Calado (m)</TableCell>
-                                <TableCell>Operativo</TableCell>
-                                <TableCell>Fecha de Construcción</TableCell>
-                                <TableCell>Tipo</TableCell>
-                                <TableCell>Acciones</TableCell>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow sx={{ backgroundColor: '#eeeeee' }}>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell align="center">Puerto</TableCell>
+                            <TableCell>Longitud (m)</TableCell>
+                            <TableCell>Calado (m)</TableCell>
+                            <TableCell>Operativo</TableCell>
+                            <TableCell>Fecha de Construcción</TableCell>
+                            <TableCell>Tipo</TableCell>
+                            <TableCell>Acciones</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {muelles.map((row) => (
+                            <TableRow key={row.id_muelle}>
+                                <TableCell sx={{ fontWeight: 'bold' }}>{row.nombre}</TableCell>
+                                <TableCell align="center">{row.id_puerto_puerto.nombre}</TableCell>
+                                <TableCell>{row.longitud_m}</TableCell>
+                                <TableCell>{row.calado_m}</TableCell>
+                                <TableCell>
+                                    <Checkbox checked={row.operativo} disabled />
+                                </TableCell>
+                                <TableCell>{row.fecha_construccion}</TableCell>
+                                <TableCell>{row.tipo}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() => handleClickOpen(row.id_muelle)}
+                                    >
+                                        <DeleteIcon />
+                                    </Button>
+                                    <Button
+                                        sx={{ ml: 1 }}
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={() => navigate('/muelles/edit/' + row.id_muelle)}
+                                    >
+                                        <EditIcon />
+                                    </Button>
+                                </TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {muelles.map((row) => (
-                                <TableRow key={row.id_muelle}>
-                                    <TableCell>{row.nombre}</TableCell>
-                                    <TableCell align="center">{row.id_puerto_puerto.nombre}</TableCell>
-                                    <TableCell>{row.longitud_m}</TableCell>
-                                    <TableCell>{row.calado_m}</TableCell>
-                                    <TableCell>
-                                        <Checkbox checked={row.operativo} disabled />
-                                    </TableCell>
-                                    <TableCell>{row.fecha_construccion}</TableCell>
-                                    <TableCell>{row.tipo}</TableCell>
-                                    <TableCell>
-                                        <Button
-                                            variant="contained"
-                                            color="error"
-                                            onClick={() => handleClickOpen(row.id_muelle)}
-                                        >
-                                            <DeleteIcon />
-                                        </Button>
-                                        <Button
-                                            sx={{ ml: 1 }}
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => navigate('/muelles/edit/' + row.id_muelle)}
-                                        >
-                                            <EditIcon />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25, 50]}
-                    component="div"
-                    count={totalRows}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    labelRowsPerPage="Filas por página"
-                    labelDisplayedRows={({ from, to, count }) =>
-                        `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`}
-                />
-            </Paper>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50]}
+                component="div"
+                count={totalRows}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage="Filas por página"
+                labelDisplayedRows={({ from, to, count }) =>
+                    `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`}
+            />
 
             <Dialog
                 open={open}

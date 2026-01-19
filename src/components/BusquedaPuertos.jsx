@@ -217,7 +217,7 @@ const BusquedaPuertos = () => {
                                                     sx={{ ml: 1 }}
                                                     variant="contained"
                                                     color="primary"
-                                                    onClick={() => navigate('/muelles/edit/' + row.id_muelle)}
+                                                    onClick={() => navigate('/puertos/edit/' + row.id_puerto)}
                                                 >
                                                     <EditIcon />
                                                 </Button>

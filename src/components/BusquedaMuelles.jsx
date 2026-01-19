@@ -199,7 +199,7 @@ const BusquedaMuelles = () => {
                                 <TableBody>
                                     {resultados.map((row) => (
                                         <TableRow key={row.id_muelle} hover>
-                                            <TableCell>{row.nombre}</TableCell>
+                                            <TableCell sx={{ fontWeight: 'bold' }}>{row.nombre}</TableCell>
                                             <TableCell align="center">{row.id_puerto_puerto.nombre}</TableCell>
                                             <TableCell>{row.longitud_m}</TableCell>
                                             <TableCell>{row.calado_m}</TableCell>

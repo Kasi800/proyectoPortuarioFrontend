@@ -29,13 +29,23 @@ const FormularioMuelle = () => {
             try {
                 // Cargas la lista para el desplegable
                 const listaPuertos = await puertoService.getAll();
-                setPuertos(listaPuertos);
+                setPuertos(listaPuertos.rows);
 
                 // Si hay ID, cargamos los datos del muelle
                 if (id) {
                     const data = await muelleService.getById(id);
                     // Aseguramos que los datos encajen en el form
                     setFormData(data);
+                } else {
+                    setFormData({
+                        nombre: '',
+                        id_puerto: '',
+                        longitud_m: 0,
+                        calado_m: 0,
+                        operativo: true,
+                        fecha_construccion: '',
+                        tipo: ''
+                    });
                 }
             } catch (error) {
                 alert("Error cargando los datos:" + error.message);
@@ -113,7 +123,7 @@ const FormularioMuelle = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField fullWidth type="date" label="Fecha de Construcción" name="fecha_construccion"
-                            value={formData.fecha_construccion} onChange={handleChange} required />
+                            value={formData.fecha_construccion} slotProps={{ inputLabel: { shrink: true } }} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={12}>
                         <FormControlLabel
