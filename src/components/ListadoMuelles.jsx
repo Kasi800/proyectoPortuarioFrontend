@@ -36,12 +36,8 @@ const ListadoMuelles = () => {
                     order: 'id_muelle:ASC'
                 });
 
-                if (data.rows) {
-                    setMuelles(data.rows);
-                    setTotalRows(data.count);
-                } else {
-                    setMuelles(data);
-                }
+                setMuelles(data.rows);
+                setTotalRows(data.count);
             } catch (err) {
                 // Error ya manejado en el servicio
                 console.error('Error al cargar muelles:', err.message);

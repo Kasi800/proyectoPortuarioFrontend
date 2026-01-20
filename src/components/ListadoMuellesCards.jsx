@@ -4,14 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import {
     Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
-    DialogTitle, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead,
-    TableRow, Paper, Checkbox, Typography, Button,
-    Grid,
-    Card,
-    CardMedia,
-    CardContent,
-    Chip,
-    CardActions
+    DialogTitle, TablePagination, Typography, Button, Grid, Card, CardMedia, CardContent,
+    Chip, CardActions
 } from '@mui/material';
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,6 +17,10 @@ const ListadoMuelles = () => {
     const [muelles, setMuelles] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [totalRows, setTotalRows] = useState(0);
+
     const [open, setOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
 
@@ -31,15 +29,15 @@ const ListadoMuelles = () => {
             try {
                 setLoading(true);
 
+                const offset = page * rowsPerPage;
                 const data = await muelleService.getFiltered({
-                    limit: 500,
+                    limit: rowsPerPage,
+                    offset: offset,
+                    order: 'id_muelle:ASC'
                 });
 
-                if (data.rows) {
-                    setMuelles(data.rows);
-                } else {
-                    setMuelles(data);
-                }
+                setMuelles(data.rows);
+                setTotalRows(data.count);
             } catch (err) {
                 // Error ya manejado en el servicio
                 console.error('Error al cargar muelles:', err.message);
@@ -48,7 +46,7 @@ const ListadoMuelles = () => {
             }
         };
         cargarMuelles();
-    }, []);
+    }, [page, rowsPerPage]);
 
     const handleConfirmDelete = async () => {
         handleClose();
@@ -73,15 +71,24 @@ const ListadoMuelles = () => {
         setOpen(true);
     };
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     const DetailRow = ({ label, value, unit }) => (
-    <Box>
-        <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
-        {label}:
-        </Typography>
-        <Typography variant="body1" className="font-medium capitalize" sx={{ textAlign: 'right' }}>
-        {value} {unit}
-        </Typography>
-    </Box>
+        <Box>
+            <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
+                {label}:
+            </Typography>
+            <Typography variant="body1" className="font-medium capitalize" sx={{ textAlign: 'right' }}>
+                {value} {unit}
+            </Typography>
+        </Box>
     );
 
     if (loading) {
@@ -98,13 +105,13 @@ const ListadoMuelles = () => {
                 Listado de muelles
             </Typography>
 
-            <Grid container spacing={1} >
+            <Grid container spacing={1} margin={5} >
                 {muelles.map((row) => (
                     <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                         <Card>
                             <CardMedia
                                 sx={{ height: 180 }}
-                                image="https://images.pexels.com/photos/10186985/pexels-photo-10186985.jpeg?auto=compress&cs=tinysrgb&w=800"
+                                image="https://elmercantil.com/wp-content/uploads/2021/04/2021-04-30-ultimo-cajon-Reina-Sofia-scaled-e1619786100313-988x556.jpg"
                                 title={"Muelle " + row.id_muelle}
                             />
                             <CardContent>
@@ -135,8 +142,8 @@ const ListadoMuelles = () => {
                             </CardContent>
 
                             <CardActions>
-                                <Button 
-                                    size="small" 
+                                <Button
+                                    size="small"
                                     startIcon={<DeleteIcon />}
                                     variant="contained"
                                     color="error"
@@ -145,8 +152,8 @@ const ListadoMuelles = () => {
                                 >
                                     Borrar
                                 </Button>
-                                <Button 
-                                    size="small" 
+                                <Button
+                                    size="small"
                                     startIcon={<EditIcon />}
                                     variant="contained"
                                     color="primary"
@@ -159,6 +166,18 @@ const ListadoMuelles = () => {
                     </Grid>
                 ))}
             </Grid>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50]}
+                component="div"
+                count={totalRows}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage="Filas por página"
+                labelDisplayedRows={({ from, to, count }) =>
+                    `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`}
+            />
 
             <Dialog
                 open={open}
