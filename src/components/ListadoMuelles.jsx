@@ -33,7 +33,6 @@ const ListadoMuelles = () => {
                 const data = await muelleService.getFiltered({
                     limit: rowsPerPage,
                     offset: offset,
-                    order: 'id_muelle:ASC'
                 });
 
                 setMuelles(data.rows);
@@ -118,7 +117,7 @@ const ListadoMuelles = () => {
                                 <TableCell>
                                     <Checkbox checked={row.operativo} disabled />
                                 </TableCell>
-                                <TableCell>{row.fecha_construccion}</TableCell>
+                                <TableCell>{new Date(row.fecha_construccion).toLocaleDateString('es-ES')}</TableCell>
                                 <TableCell>{row.tipo}</TableCell>
                                 <TableCell>
                                     <Button

@@ -58,6 +58,8 @@ const BusquedaMuelles = () => {
             const params = {};
 
             if (filtros.id_puerto) params.id_puerto = filtros.id_puerto;
+            if (filtros.fecha_construccion_min) params.fecha_construccion_min = filtros.fecha_construccion_min;
+            if (filtros.fecha_construccion_max) params.fecha_construccion_max = filtros.fecha_construccion_max;
 
             if (filtros.operativo !== 'todos') {
                 params.operativo = filtros.operativo === 'si';
@@ -206,7 +208,7 @@ const BusquedaMuelles = () => {
                                             <TableCell>
                                                 <Checkbox checked={row.operativo} disabled />
                                             </TableCell>
-                                            <TableCell>{row.fecha_construccion}</TableCell>
+                                            <TableCell>{new Date(row.fecha_construccion).toLocaleDateString('es-ES')}</TableCell>
                                             <TableCell>{row.tipo}</TableCell>
                                             <TableCell>
                                                 <Button

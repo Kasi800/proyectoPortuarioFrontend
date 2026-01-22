@@ -81,7 +81,12 @@ const ListadoMuelles = () => {
     };
 
     const DetailRow = ({ label, value, unit }) => (
-        <Box>
+        <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 0.5
+        }}>
             <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
                 {label}:
             </Typography>
@@ -115,9 +120,9 @@ const ListadoMuelles = () => {
                                 title={"Muelle " + row.id_muelle}
                             />
                             <CardContent>
-                                <Box className="flex justify-between items-start mb-4 border-b pb-3">
+                                <Box>
                                     <Box>
-                                        <Typography variant="h5" component="div" className="font-extrabold text-gray-800">
+                                        <Typography variant="h5" component="div">
                                             {row.nombre}
                                         </Typography>
                                         <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
@@ -137,7 +142,7 @@ const ListadoMuelles = () => {
                                     <DetailRow label="Tipo" value={row.tipo} />
                                     <DetailRow label="Longitud" value={row.longitud_m} unit="m" />
                                     <DetailRow label="Calado" value={row.calado_m} unit="m" />
-                                    <DetailRow label="Construcción" value={row.fecha_construccion} />
+                                    <DetailRow label="Fecha Construcción" value={new Date(row.fecha_construccion).toLocaleDateString('es-ES')} />
                                 </Box>
                             </CardContent>
 

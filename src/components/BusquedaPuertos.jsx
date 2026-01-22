@@ -26,7 +26,9 @@ const BusquedaPuertos = () => {
     const [filtros, setFiltros] = useState({
         ciudad: '',
         pais: '',
-        activo: 'todos'
+        activo: 'todos',
+        fecha_inauguracion_min: '',
+        fecha_inauguracion_max: ''
     });
 
     const handleChange = (e) => {
@@ -44,6 +46,8 @@ const BusquedaPuertos = () => {
 
             if (filtros.ciudad) params.ciudad = filtros.ciudad.trim();
             if (filtros.pais) params.pais = filtros.pais.trim();
+            if (filtros.fecha_inauguracion_min) params.fecha_inauguracion_min = filtros.fecha_inauguracion_min;
+            if (filtros.fecha_inauguracion_max) params.fecha_inauguracion_max = filtros.fecha_inauguracion_max;
 
             if (filtros.activo !== 'todos') {
                 params.activo = (filtros.activo === 'si');
@@ -63,7 +67,7 @@ const BusquedaPuertos = () => {
     };
 
     const limpiarFiltros = () => {
-        setFiltros({ ciudad: '', pais: '', activo: 'todos' });
+        setFiltros({ ciudad: '', pais: '', activo: 'todos', fecha_inauguracion_min: '', fecha_inauguracion_max: '' });
         setResultados([]);
         setBusquedaRealizada(false);
     };
@@ -143,6 +147,32 @@ const BusquedaPuertos = () => {
                             </TextField>
                         </Grid>
 
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                fullWidth
+                                type="date"
+                                label="Fecha de Inauguración Mínima"
+                                helperText="Filtra los puertos por fecha de inauguración mínima"
+                                name="fecha_inauguracion_min"
+                                value={filtros.fecha_inauguracion_min}
+                                slotProps={{ inputLabel: { shrink: true } }}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12} md={3}>
+                            <TextField
+                                fullWidth
+                                type="date"
+                                label="Fecha de Inauguración Máxima"
+                                helperText="Filtra los puertos por fecha de inauguración máxima"
+                                name="fecha_inauguracion_max"
+                                value={filtros.fecha_inauguracion_max}
+                                slotProps={{ inputLabel: { shrink: true } }}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+
                         <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
                             <Button
                                 variant="contained"
@@ -187,8 +217,10 @@ const BusquedaPuertos = () => {
                                         <TableCell>Nombre</TableCell>
                                         <TableCell>Ciudad</TableCell>
                                         <TableCell>País</TableCell>
-                                        <TableCell>Capacidad (TEU)</TableCell>
-                                        <TableCell align="center">Estado</TableCell>
+                                        <TableCell>Capacidad TEU</TableCell>
+                                        <TableCell align="center">Activo</TableCell>
+                                        <TableCell>Fecha de Inauguración</TableCell>
+                                        <TableCell>Profundidad media</TableCell>
                                         <TableCell align="center">Acciones</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -202,6 +234,8 @@ const BusquedaPuertos = () => {
                                             <TableCell align="center">
                                                 <Checkbox checked={row.activo} disabled />
                                             </TableCell>
+                                            <TableCell>{new Date(row.fecha_inauguracion).toLocaleDateString('es-ES')}</TableCell>
+                                            <TableCell>{row.profundidad_media}</TableCell>
                                             <TableCell align="center">
                                                 <Button
                                                     variant="contained"

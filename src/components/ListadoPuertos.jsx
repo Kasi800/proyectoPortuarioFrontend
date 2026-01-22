@@ -97,7 +97,7 @@ const ListadoPuertos = () => {
                                 <TableCell>
                                     <Checkbox checked={row.activo} disabled />
                                 </TableCell>
-                                <TableCell>{row.fecha_inauguracion}</TableCell>
+                                <TableCell>{new Date(row.fecha_inauguracion).toLocaleDateString('es-ES')}</TableCell>
                                 <TableCell>{row.profundidad_media}</TableCell>
                                 <TableCell>
                                     <Button

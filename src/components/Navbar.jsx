@@ -47,7 +47,7 @@ function Navbar() {
   const linkStyle = { color: "inherit", textDecoration: "none" };
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Menú para resolución xs  */}
