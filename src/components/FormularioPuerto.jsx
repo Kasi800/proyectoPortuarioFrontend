@@ -29,6 +29,7 @@ const FormularioPuerto = () => {
                     const data = await puertoService.getById(id);
 
                     // Aseguramos que los datos encajen en el form
+                    delete data.id_puerto; 
                     setFormData(data);
                 } catch (error) {
                     alert("Error cargando puerto");

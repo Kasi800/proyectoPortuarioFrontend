@@ -34,7 +34,9 @@ const FormularioMuelle = () => {
                 // Si hay ID, cargamos los datos del muelle
                 if (id) {
                     const data = await muelleService.getById(id);
+
                     // Aseguramos que los datos encajen en el form
+                    delete data.id_muelle;
                     setFormData(data);
                 } else {
                     setFormData({
@@ -118,8 +120,26 @@ const FormularioMuelle = () => {
                             value={formData.calado_m} onChange={handleChange} required />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField fullWidth label="Tipo" name="tipo"
-                            value={formData.tipo} onChange={handleChange} required />
+                        <TextField
+                            select
+                            helperText="Seleccione un tipo"
+                            fullWidth
+                            label="Tipo"
+                            name="tipo"
+                            value={formData.tipo}
+                            onChange={handleChange}
+                            required
+                        >
+                            <MenuItem value="carga">
+                                Carga
+                            </MenuItem>
+                            <MenuItem value="pasajeros">
+                                Pasajeros
+                            </MenuItem>
+                            <MenuItem value="granel">
+                                Granel
+                            </MenuItem>
+                        </TextField>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField fullWidth type="date" label="Fecha de Construcción" name="fecha_construccion"
