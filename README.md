@@ -28,3 +28,7 @@ FrontEnd React desarrollado con **Vite.js**, **React** y **Axios**.
 - **Nombre:** infraestructura_portuaria (por defecto)
 - **Usuario:** root (tu usuario)
 - **Contraseña:** test (contraseña del usuario)
+
+## 💻 Backend
+
+- **Puerto:** 3000 (por defecto)
