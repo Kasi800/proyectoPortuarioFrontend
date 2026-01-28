@@ -1,4 +1,4 @@
-# 🚢 FrontEnd Portuaria – Puertos y Muelles
+# 🚢 FrontEnd Portuario – Puertos y Muelles
 
 ## 🚀 Enlaces Rápidos
 * **Frontend:** [puerto-api-frontend](https://github.com/Kasi800/proyectoPortuarioFrontend)
@@ -13,7 +13,7 @@ FrontEnd React desarrollado con **Vite.js**, **React** y **Axios**.
 ## 📌 Características principales
 
 - Listado de Puertos
-- Listado de Puertos parametrizado incluyendo rangos de fecha de construcción
+- Listado de Puertos parametrizado incluyendo rangos de fechas de construcción
 - Alta/Edición de Puerto
 - Listado de Muelles paginado
 - Listado de Muelles parametrizado
