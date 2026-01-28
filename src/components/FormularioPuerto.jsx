@@ -72,38 +72,38 @@ const FormularioPuerto = () => {
 
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid>
                         <TextField fullWidth label="Nombre" name="nombre"
                             value={formData.nombre} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth label="Ciudad" name="ciudad"
                             value={formData.ciudad} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth label="País" name="pais"
                             value={formData.pais} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth type="number" label="Capacidad (TEU)" name="capacidad_teu"
                             value={formData.capacidad_teu} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth type="number" label="Profundidad (m)" name="profundidad_media"
                             value={formData.profundidad_media} onChange={handleChange} inputProps={{ step: "0.01" }} required />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid>
                         <TextField fullWidth type="date" label="Fecha Inauguración" name="fecha_inauguracion"
                             value={formData.fecha_inauguracion} onChange={handleChange} slotProps={{ inputLabel: { shrink: true } }} required />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid>
                         <FormControlLabel
                             control={<Checkbox checked={formData.activo} onChange={handleChange} name="activo" />}
                             label="Puerto Activo / Operativo"
                         />
                     </Grid>
 
-                    <Grid item xs={12} sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                    <Grid sx={{ mt: 2, display: 'flex', gap: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
                             Guardar
                         </Button>

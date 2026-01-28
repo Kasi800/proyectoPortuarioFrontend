@@ -1,12 +1,13 @@
 import axios from 'axios';
+import config from '../config/config'
 
 /**
  * Instancia configurada de Axios para comunicación con el backend
- * Base URL: http://localhost:3000/api
+ * Base URL: http://localhost:${backend_port}/api
  * Content-Type: application/json
  */
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `http://localhost:${config.backend_port}/api`,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',

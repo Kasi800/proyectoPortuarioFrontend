@@ -114,7 +114,7 @@ const BusquedaMuelles = () => {
 
                 <Paper sx={{ p: 3, mb: 4 }}>
                     <Grid container spacing={2} alignItems="center">
-                        <Grid item xs={12} md={5}>
+                        <Grid>
                             <TextField
                                 select
                                 fullWidth
@@ -133,7 +133,7 @@ const BusquedaMuelles = () => {
                             </TextField>
                         </Grid>
 
-                        <Grid item xs={12} md={3}>
+                        <Grid>
                             <TextField
                                 select
                                 fullWidth
@@ -149,7 +149,7 @@ const BusquedaMuelles = () => {
                             </TextField>
                         </Grid>
 
-                        <Grid item xs={12} md={4} sx={{ display: 'flex', gap: 1 }}>
+                        <Grid sx={{ display: 'flex', gap: 1 }}>
                             <Button
                                 variant="contained"
                                 size="large"

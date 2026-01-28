@@ -89,11 +89,11 @@ const FormularioMuelle = () => {
 
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid>
                         <TextField fullWidth label="Nombre" name="nombre"
                             value={formData.nombre} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField
                             select
                             helperText="Porfavor seleccione un puerto"
@@ -111,15 +111,15 @@ const FormularioMuelle = () => {
                             ))}
                         </TextField>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth type="number" label="Longitud (m)" name="longitud_m"
                             value={formData.longitud_m} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField fullWidth type="number" label="Calado (m)" name="calado_m"
                             value={formData.calado_m} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid>
                         <TextField
                             select
                             helperText="Seleccione un tipo"
@@ -141,18 +141,18 @@ const FormularioMuelle = () => {
                             </MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid>
                         <TextField fullWidth type="date" label="Fecha de Construcción" name="fecha_construccion"
                             value={formData.fecha_construccion} slotProps={{ inputLabel: { shrink: true } }} onChange={handleChange} required />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid>
                         <FormControlLabel
                             control={<Checkbox checked={formData.operativo} onChange={handleChange} name="operativo" />}
                             label="Muelle Activo / Operativo"
                         />
                     </Grid>
 
-                    <Grid item xs={12} sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                    <Grid sx={{ mt: 2, display: 'flex', gap: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
                             Guardar
                         </Button>

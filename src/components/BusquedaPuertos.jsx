@@ -105,7 +105,7 @@ const BusquedaPuertos = () => {
                 <Paper sx={{ p: 3, mb: 4 }} elevation={2}>
                     <Grid container spacing={2} alignItems="center">
 
-                        <Grid item xs={12} md={4}>
+                        <Grid>
                             <TextField
                                 fullWidth
                                 label="Ciudad"
@@ -118,7 +118,7 @@ const BusquedaPuertos = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12} md={4}>
+                        <Grid>
                             <TextField
                                 fullWidth
                                 label="País"
@@ -131,7 +131,7 @@ const BusquedaPuertos = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12} md={4}>
+                        <Grid>
                             <TextField
                                 select
                                 fullWidth
@@ -147,7 +147,7 @@ const BusquedaPuertos = () => {
                             </TextField>
                         </Grid>
 
-                        <Grid item xs={12} md={3}>
+                        <Grid>
                             <TextField
                                 fullWidth
                                 type="date"
@@ -160,7 +160,7 @@ const BusquedaPuertos = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12} md={3}>
+                        <Grid>
                             <TextField
                                 fullWidth
                                 type="date"
@@ -173,7 +173,7 @@ const BusquedaPuertos = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+                        <Grid sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
                             <Button
                                 variant="contained"
                                 size="large"

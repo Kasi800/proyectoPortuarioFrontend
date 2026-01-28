@@ -112,7 +112,7 @@ const ListadoMuelles = () => {
 
             <Grid container spacing={1} margin={5} >
                 {muelles.map((row) => (
-                    <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                    <Grid key={row.id_muelle} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                         <Card>
                             <CardMedia
                                 sx={{ height: 180 }}
