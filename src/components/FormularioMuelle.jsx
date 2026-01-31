@@ -5,7 +5,8 @@ import puertoService from '../services/puertoService';
 
 import {
     TextField, Button, Checkbox, FormControlLabel,
-    Paper, Typography, Grid, MenuItem
+    Paper, Typography, Grid, MenuItem, Dialog, DialogActions, 
+    DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
 
 const FormularioMuelle = () => {
@@ -23,6 +24,13 @@ const FormularioMuelle = () => {
         tipo: ''
     });
     const [puertos, setPuertos] = useState([]);
+
+    const [feedback, setFeedback] = useState({
+        open: false,
+        title: '',
+        message: '',
+        isError: false
+    });
 
     useEffect(() => {
         const cargarDatos = async () => {
@@ -50,8 +58,12 @@ const FormularioMuelle = () => {
                     });
                 }
             } catch (error) {
-                alert("Error cargando los datos:" + error.message);
-                navigate('/muelles');
+                setFeedback({
+                    open: true,
+                    title: 'Ha ocurrido un error',
+                    message: 'No se pudo cargar los datos: ' + (error.message || 'Error desconocido'),
+                    isError: true
+                });
             }
         }
         cargarDatos();
@@ -70,14 +82,38 @@ const FormularioMuelle = () => {
         try {
             if (id) {
                 await muelleService.update(id, formData);
-                alert("Muelle actualizado correctamente");
+                setFeedback({
+                    open: true,
+                    title: 'Operación Exitosa',
+                    message: 'Muelle actualizado correctamente.',
+                    isError: false
+                });
             } else {
                 await muelleService.create(formData);
-                alert("Muelle creado correctamente");
+                setFeedback({
+                    open: true,
+                    title: 'Operación Exitosa',
+                    message: 'Muelle creado correctamente.',
+                    isError: false
+                });
             }
-            navigate('/');
         } catch (error) {
-            alert("Error: " + error.message);
+            setFeedback({
+                open: true,
+                title: 'Ha ocurrido un error',
+                message: 'No se pudo guardar el muelle: ' + (error.message || 'Error desconocido'),
+                isError: true
+            });
+        }
+    };
+
+    const handleCloseFeedback = () => {
+        setFeedback(prev => ({ ...prev, open: false }));
+        
+        if (!feedback.isError) {
+            navigate('/muelles');
+        } else {
+            navigate('/');
         }
     };
 
@@ -162,6 +198,27 @@ const FormularioMuelle = () => {
                     </Grid>
                 </Grid>
             </form>
+
+            <Dialog
+                open={feedback.open}
+                onClose={handleCloseFeedback}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {feedback.title}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {feedback.message}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseFeedback} autoFocus>
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Paper>
     );
 };

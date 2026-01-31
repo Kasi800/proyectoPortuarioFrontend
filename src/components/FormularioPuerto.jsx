@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import puertoService from '../services/puertoService';
 import {
     TextField, Button, Checkbox, FormControlLabel,
-    Paper, Typography, Grid
+    Paper, Typography, Grid, Dialog, DialogActions, 
+    DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
 
 const FormularioPuerto = () => {
@@ -21,6 +22,13 @@ const FormularioPuerto = () => {
         profundidad_media: 0
     });
 
+    const [feedback, setFeedback] = useState({
+        open: false,
+        title: '',
+        message: '',
+        isError: false
+    });
+
     useEffect(() => {
         // Si hay ID, cargamos los datos del puerto
         if (id) {
@@ -32,8 +40,12 @@ const FormularioPuerto = () => {
                     delete data.id_puerto; 
                     setFormData(data);
                 } catch (error) {
-                    alert("Error cargando puerto");
-                    navigate('/puertos');
+                    setFeedback({
+                        open: true,
+                        title: 'Ha ocurrido un error',
+                        message: 'No se pudo cargar los datos: ' + (error.message || 'Error desconocido'),
+                        isError: true
+                    });
                 }
             };
             cargarPuerto();
@@ -53,14 +65,38 @@ const FormularioPuerto = () => {
         try {
             if (id) {
                 await puertoService.update(id, formData);
-                alert("Puerto actualizado correctamente");
+                setFeedback({
+                    open: true,
+                    title: 'Operación Exitosa',
+                    message: 'Puerto actualizado correctamente.',
+                    isError: false
+                });
             } else {
                 await puertoService.create(formData);
-                alert("Puerto creado correctamente");
+                setFeedback({
+                    open: true,
+                    title: 'Operación Exitosa',
+                    message: 'Puerto creado correctamente.',
+                    isError: false
+                });
             }
-            navigate('/');
         } catch (error) {
-            alert("Error: " + error.message);
+            setFeedback({
+                open: true,
+                title: 'Ha ocurrido un error',
+                message: 'No se pudo guardar el muelle: ' + (error.message || 'Error desconocido'),
+                isError: true
+            });
+        }
+    };
+
+    const handleCloseFeedback = () => {
+        setFeedback(prev => ({ ...prev, open: false }));
+        
+        if (!feedback.isError) {
+            navigate('/puertos');
+        } else {
+            navigate('/');
         }
     };
 
@@ -113,6 +149,27 @@ const FormularioPuerto = () => {
                     </Grid>
                 </Grid>
             </form>
+
+            <Dialog
+                open={feedback.open}
+                onClose={handleCloseFeedback}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {feedback.title}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {feedback.message}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseFeedback} autoFocus>
+                        Aceptar
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Paper>
     );
 };
