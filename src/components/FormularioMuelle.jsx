@@ -5,7 +5,7 @@ import puertoService from '../services/puertoService';
 
 import {
     TextField, Button, Checkbox, FormControlLabel,
-    Paper, Typography, Grid, MenuItem, Dialog, DialogActions, 
+    Paper, Typography, Grid, MenuItem, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
 
@@ -109,11 +109,9 @@ const FormularioMuelle = () => {
 
     const handleCloseFeedback = () => {
         setFeedback(prev => ({ ...prev, open: false }));
-        
+
         if (!feedback.isError) {
             navigate('/muelles');
-        } else {
-            navigate('/');
         }
     };
 
@@ -149,11 +147,11 @@ const FormularioMuelle = () => {
                     </Grid>
                     <Grid>
                         <TextField fullWidth type="number" label="Longitud (m)" name="longitud_m"
-                            value={formData.longitud_m} onChange={handleChange} required />
+                            value={formData.longitud_m} onChange={handleChange} inputProps={{ step: "0.01", min: "0", max: "99999999.99" }} required />
                     </Grid>
                     <Grid>
                         <TextField fullWidth type="number" label="Calado (m)" name="calado_m"
-                            value={formData.calado_m} onChange={handleChange} required />
+                            value={formData.calado_m} onChange={handleChange} inputProps={{ step: "0.01", min: "0", max: "999.99" }} required />
                     </Grid>
                     <Grid>
                         <TextField

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import puertoService from '../services/puertoService';
 import {
     TextField, Button, Checkbox, FormControlLabel,
-    Paper, Typography, Grid, Dialog, DialogActions, 
+    Paper, Typography, Grid, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
 
@@ -37,7 +37,7 @@ const FormularioPuerto = () => {
                     const data = await puertoService.getById(id);
 
                     // Aseguramos que los datos encajen en el form
-                    delete data.id_puerto; 
+                    delete data.id_puerto;
                     setFormData(data);
                 } catch (error) {
                     setFeedback({
@@ -58,6 +58,8 @@ const FormularioPuerto = () => {
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
+        console.log(formData);
+
     };
 
     const handleSubmit = async (e) => {
@@ -92,11 +94,9 @@ const FormularioPuerto = () => {
 
     const handleCloseFeedback = () => {
         setFeedback(prev => ({ ...prev, open: false }));
-        
+
         if (!feedback.isError) {
             navigate('/puertos');
-        } else {
-            navigate('/');
         }
     };
 
@@ -122,11 +122,11 @@ const FormularioPuerto = () => {
                     </Grid>
                     <Grid>
                         <TextField fullWidth type="number" label="Capacidad (TEU)" name="capacidad_teu"
-                            value={formData.capacidad_teu} onChange={handleChange} required />
+                            value={formData.capacidad_teu} onChange={handleChange} inputProps={{ min: "0" }} required />
                     </Grid>
                     <Grid>
                         <TextField fullWidth type="number" label="Profundidad (m)" name="profundidad_media"
-                            value={formData.profundidad_media} onChange={handleChange} inputProps={{ step: "0.01" }} required />
+                            value={formData.profundidad_media} onChange={handleChange} inputProps={{ step: "0.01", min: "0", max: "999.99" }} required />
                     </Grid>
                     <Grid>
                         <TextField fullWidth type="date" label="Fecha Inauguración" name="fecha_inauguracion"
