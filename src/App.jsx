@@ -8,6 +8,7 @@ import ListadoMuelles from "./components/ListadoMuelles";
 import ListadoMuellesCards from "./components/ListadoMuellesCards";
 import FormularioMuelle from "./components/FormularioMuelle";
 import BusquedaMuelles from './components/BusquedaMuelles';
+import GraficaPuertos from './components/GraficaPuertos';
 
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/puertos/search",
         element: <BusquedaPuertos />,
+      },
+      {
+        path: "/puertos/graphic",
+        element: <GraficaPuertos />,
       },
     ],
   },

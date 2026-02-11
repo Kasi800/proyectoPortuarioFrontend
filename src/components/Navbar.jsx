@@ -47,7 +47,7 @@ function Navbar() {
   const linkStyle = { color: "inherit", textDecoration: "none" };
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{ '@media print': { display: 'none' } }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Menú para resolución xs  */}
@@ -97,6 +97,13 @@ function Navbar() {
                 <Link to="/puertos/search" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
                     Listado de puertos Parametrizado
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/puertos/graphic" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Gráfico de puertos
                   </Typography>
                 </Link>
               </MenuItem>
@@ -195,6 +202,13 @@ function Navbar() {
                 <Link to="/puertos/search" style={linkStyle}>
                   <Typography sx={{ textAlign: "center" }}>
                     Listado de puertos parametrizado
+                  </Typography>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to="/puertos/graphic" style={linkStyle}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    Gráfico de puertos
                   </Typography>
                 </Link>
               </MenuItem>

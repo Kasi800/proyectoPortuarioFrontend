@@ -1,15 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import puertoService from '../services/puertoService';
 import { useNavigate } from 'react-router-dom';
 
 import {
     Box, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
     DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    Checkbox, Typography, Button
+    Checkbox, Typography, Button,
+    Stack
 } from '@mui/material';
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import PrintIcon from '@mui/icons-material/Print';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DescriptionIcon from '@mui/icons-material/Description';
+
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { pdf } from '@react-pdf/renderer';
+import PuertosPDF from './PuertosPDF';
 
 const ListadoPuertos = () => {
     const navigate = useNavigate();
@@ -20,6 +29,8 @@ const ListadoPuertos = () => {
     const [open, setOpen] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
 
+    const printRef = useRef(null);
+
     useEffect(() => {
         async function cargarPuertos() {
             try {
@@ -27,7 +38,6 @@ const ListadoPuertos = () => {
                 const data = await puertoService.getAll();
                 setPuertos(data.rows);
             } catch (err) {
-                // Error ya manejado en el servicio
                 console.error('Error al cargar puertos:', err.message);
             } finally {
                 setLoading(false);
@@ -59,6 +69,48 @@ const ListadoPuertos = () => {
         setOpen(true);
     };
 
+    const handlePrintBrowser = () => {
+        window.print();
+    };
+
+    // --- B. IMPRESIÓN IMAGEN (Screenshot) ---
+    const handlePrintImagePDF = async () => {
+        const element = printRef.current;
+        if (!element) return;
+        
+        try {
+            const canvas = await html2canvas(element, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdfDoc = new jsPDF('l', 'mm', 'a4');
+            const pdfWidth = pdfDoc.internal.pageSize.getWidth();
+            
+            const imgProps = pdfDoc.getImageProperties(imgData);
+            const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdfDoc.addImage(imgData, 'PNG', 0, 10, pdfWidth, imgHeight);
+            pdfDoc.save('captura_puertos.pdf');
+        } catch (err) {
+            console.error("Error generando imagen PDF", err);
+        }
+    };
+
+    // --- C. IMPRESIÓN INFORME (React-PDF) ---
+    const handlePrintReportPDF = async () => {
+        try {
+            const blob = await pdf(<PuertosPDF data={puertos} />).toBlob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = "informe_puertos.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error("Error generando informe", error);
+        }
+    };
+
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
@@ -68,10 +120,30 @@ const ListadoPuertos = () => {
     }
 
     return (
-        <>
-            <Typography variant="h4" align="center" sx={{ my: 3 }}>
+        <div ref={printRef}>
+            <Typography variant="h4" align="center" sx={{ my: 3, marginBottom: 1 }}>
                 Listado de puertos
             </Typography>
+
+            <Stack 
+                direction="row" 
+                spacing={1} 
+                justifyContent="center"
+                margin={2}
+                sx={{ 
+                    '@media print': { display: 'none' } 
+                }}
+            >
+                <Button variant="outlined" startIcon={<PrintIcon />} onClick={handlePrintBrowser}>
+                    Web
+                </Button>
+                <Button variant="outlined" color="secondary" startIcon={<PictureAsPdfIcon />} onClick={handlePrintImagePDF}>
+                    Foto
+                </Button>
+                <Button variant="contained" color="primary" startIcon={<DescriptionIcon />} onClick={handlePrintReportPDF}>
+                    Informe
+                </Button>
+            </Stack>
 
             <TableContainer component={Paper}>
                 <Table>
@@ -146,7 +218,7 @@ const ListadoPuertos = () => {
                     <Button onClick={handleClose}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </div>
     );
 };
 
