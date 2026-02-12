@@ -7,7 +7,7 @@ import config from '../config/config'
  * Content-Type: application/json
  */
 const api = axios.create({
-  baseURL: `http://localhost:${config.backend_port}/api`,
+  baseURL: `http://${config.backend_url}:${config.backend_port}/api`,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
