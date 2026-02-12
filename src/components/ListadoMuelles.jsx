@@ -11,6 +11,19 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
+
+/**
+ * ListadoMuelles
+ * Componente que muestra un listado paginado de muelles y permite
+ * eliminar o editar cada registro.
+ *
+ * Comportamiento clave:
+ * - Realiza peticiones paginadas a `muelleService.getFiltered`.
+ * - Controla la paginación con `page` y `rowsPerPage`.
+ * - Muestra un diálogo de confirmación antes de borrar un muelle.
+ *
+ * @returns {JSX.Element} Tabla paginada de muelles.
+ */
 const ListadoMuelles = () => {
     const navigate = useNavigate();
 
@@ -28,13 +41,14 @@ const ListadoMuelles = () => {
         async function cargarMuelles() {
             try {
                 setLoading(true);
-
+                // Calcular desplazamiento para la paginación en el back-end
                 const offset = page * rowsPerPage;
                 const data = await muelleService.getFiltered({
                     limit: rowsPerPage,
                     offset: offset,
                 });
 
+                // `data.rows` contiene los items; `data.count` el total disponible
                 setMuelles(data.rows);
                 setTotalRows(data.count);
             } catch (err) {
@@ -56,6 +70,7 @@ const ListadoMuelles = () => {
             // Actualizamos los datos de muelles sin el que hemos borrado
             setMuelles(muelles.filter(p => p.id_muelle !== idToDelete));
         } catch (error) {
+            // Mostrar una alerta sencilla al usuario en caso de fallo
             alert("No se pudo borrar el muelle: " + error.message);
         }
     };
@@ -71,6 +86,8 @@ const ListadoMuelles = () => {
     };
 
     const handleChangePage = (event, newPage) => {
+        // Actualizar la página activa; el efecto `useEffect` recargará
+        // los datos con los nuevos parámetros de paginación.
         setPage(newPage);
     };
 

@@ -19,7 +19,16 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { pdf } from '@react-pdf/renderer';
 import PuertosPDF from './PuertosPDF';
-
+/**
+ * ListadoPuertos
+ * Componente que muestra una tabla con los puertos obtenidos desde el
+ * servicio `puertoService`. Proporciona acciones para imprimir, generar
+ * un informe PDF, editar y eliminar puertos.
+ *
+ * No recibe props; usa hooks para gestión de estado y efectos.
+ *
+ * @returns {JSX.Element} Componente que renderiza la lista de puertos.
+ */
 const ListadoPuertos = () => {
     const navigate = useNavigate();
 
@@ -38,6 +47,7 @@ const ListadoPuertos = () => {
                 const data = await puertoService.getAll();
                 setPuertos(data.rows);
             } catch (err) {
+                // Loguear el error para depuración en desarrollo
                 console.error('Error al cargar puertos:', err.message);
             } finally {
                 setLoading(false);
@@ -73,7 +83,6 @@ const ListadoPuertos = () => {
         window.print();
     };
 
-    // --- B. IMPRESIÓN IMAGEN (Screenshot) ---
     const handlePrintImagePDF = async () => {
         const element = printRef.current;
         if (!element) return;
@@ -91,11 +100,11 @@ const ListadoPuertos = () => {
             pdfDoc.addImage(imgData, 'PNG', 0, 10, pdfWidth, imgHeight);
             pdfDoc.save('captura_puertos.pdf');
         } catch (err) {
+            // Mostrar error en consola para facilitar diagnóstico
             console.error("Error generando imagen PDF", err);
         }
     };
 
-    // --- C. IMPRESIÓN INFORME (React-PDF) ---
     const handlePrintReportPDF = async () => {
         try {
             const blob = await pdf(<PuertosPDF data={puertos} />).toBlob();
@@ -107,6 +116,7 @@ const ListadoPuertos = () => {
             link.click();
             document.body.removeChild(link);
         } catch (error) {
+            // Registrar fallo en la generación del informe PDF
             console.error("Error generando informe", error);
         }
     };

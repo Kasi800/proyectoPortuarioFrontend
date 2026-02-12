@@ -18,6 +18,17 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'; // Luna
 import Brightness7Icon from '@mui/icons-material/Brightness7'; // Sol
 import { useColorMode } from '../context/ThemeContext';
 
+/**
+ * Navbar
+ * Barra de navegación superior que contiene enlaces a las secciones de
+ * puertos y muelles, menú responsive para pantallas XS, y control de tema.
+ *
+ * No recibe props; usa hooks de React y MUI para gestionar el estado local
+ * y la apariencia.
+ *
+ * @returns {JSX.Element} Componente AppBar con menús y control de tema.
+ */
+
 function Navbar() {
   const [anclaMenuPuertos, setAnclaMenuPuertos] = React.useState(null);
   const [anclaMenuMuelles, setAnclaMenuMuelles] = React.useState(null);
@@ -25,6 +36,8 @@ function Navbar() {
 
   const theme = useTheme();
   const { toggleColorMode } = useColorMode();
+
+  // `theme` se usa solo para decidir el icono: sol en modo oscuro, luna en claro.
 
   const handleClickMenuPuertos = (event) => {
     setAnclaMenuPuertos(event.currentTarget);

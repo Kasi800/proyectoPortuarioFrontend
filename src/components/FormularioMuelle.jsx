@@ -9,6 +9,22 @@ import {
     DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
 
+/**
+ * FormularioMuelle
+ * Componente para crear y editar muelles. Cuando se recibe un `id` en la
+ * URL (vía `useParams`) carga los datos del muelle y los muestra para
+ * edición; si no hay `id`, muestra un formulario en blanco para crear uno
+ * nuevo.
+ *
+ * Flujo principal:
+ * - Carga la lista de `puertos` para el desplegable.
+ * - Si existe `id`, obtiene el muelle por id y rellena `formData`.
+ * - `handleChange` actualiza el estado del formulario.
+ * - `handleSubmit` llama a `muelleService.create` o `muelleService.update`.
+ * - Muestra feedback en un `Dialog` al completar la operación.
+ *
+ * @returns {JSX.Element} Formulario para muelles con validación básica.
+ */
 const FormularioMuelle = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -58,6 +74,7 @@ const FormularioMuelle = () => {
                     });
                 }
             } catch (error) {
+                // Mostrar diálogo de error y mantener al usuario informado
                 setFeedback({
                     open: true,
                     title: 'Ha ocurrido un error',
@@ -71,6 +88,8 @@ const FormularioMuelle = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+        // Actualiza dinámicamente el campo correspondiente. Los checkbox
+        // usan `checked`, el resto usan `value`.
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
@@ -98,6 +117,7 @@ const FormularioMuelle = () => {
                 });
             }
         } catch (error) {
+            // Mostrar error en dialogo si la operación falla
             setFeedback({
                 open: true,
                 title: 'Ha ocurrido un error',

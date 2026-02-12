@@ -13,6 +13,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 
+
+/**
+ * BusquedaPuertos
+ * Componente de búsqueda parametrizada para puertos.
+ * Permite filtrar por ciudad, país, estado operativo y rango de fechas
+ * de inauguración. Los resultados se obtienen desde `puertoService`.
+ *
+ * Estado interno:
+ * - `filtros`: objeto con los criterios de búsqueda (ciudad, pais, activo,
+ *   fecha_inauguracion_min, fecha_inauguracion_max).
+ * - `resultados`: array con los puertos devueltos por la búsqueda.
+ * - `loading` y `busquedaRealizada`: control de UI.
+ *
+ * @returns {JSX.Element} Interfaz de búsqueda y tabla de resultados.
+ */
 const BusquedaPuertos = () => {
     const navigate = useNavigate();
 
@@ -30,6 +45,10 @@ const BusquedaPuertos = () => {
         fecha_inauguracion_min: '',
         fecha_inauguracion_max: ''
     });
+
+    // `handleChange` actualiza dinámicamente el objeto `filtros` a partir
+    // de los inputs del formulario. Los campos de tipo fecha se mantienen
+    // como cadenas ISO (`YYYY-MM-DD`) para enviarlos tal cual al servicio.
 
     const handleChange = (e) => {
         setFiltros({
@@ -59,6 +78,7 @@ const BusquedaPuertos = () => {
             setResultados(data);
 
         } catch (error) {
+            // Registrar error y vaciar resultados para evitar mostrar datos previos
             console.error("Error en búsqueda:", error);
             setResultados([]);
         } finally {
@@ -67,6 +87,7 @@ const BusquedaPuertos = () => {
     };
 
     const limpiarFiltros = () => {
+        // Resetear filtros y estado de resultados
         setFiltros({ ciudad: '', pais: '', activo: 'todos', fecha_inauguracion_min: '', fecha_inauguracion_max: '' });
         setResultados([]);
         setBusquedaRealizada(false);
@@ -81,6 +102,7 @@ const BusquedaPuertos = () => {
             // Actualizamos los datos de puertos sin el que hemos borrado
             setResultados(resultados.filter(p => p.id_puerto !== idToDelete));
         } catch (error) {
+            // Mostrar alerta al usuario si la eliminación falla
             alert("No se pudo borrar el puerto: " + error.message);
         }
     };

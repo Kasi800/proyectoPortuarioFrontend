@@ -15,6 +15,24 @@ import ErrorPage from "./pages/ErrorPage";
 import BusquedaPuertos from "./components/BusquedaPuertos";
 import { ThemeContextProvider } from "./context/ThemeContext";
 
+/**
+ * App.jsx
+ * Punto de entrada de la aplicación React: define las rutas y el proveedor de tema.
+ *
+ * Este archivo configura el router utilizando `createBrowserRouter` y envuelve
+ * la aplicación con `ThemeContextProvider` para proporcionar el estado del tema.
+ *
+ * Nota: Algunas rutas usan la propiedad `Component` y otras `element`. Ambas
+ * funcionan en versiones modernas de `react-router`, pero normalmente se
+ * recomienda usar `element` con JSX para consistencia.
+ */
+
+/**
+ * Router de la aplicación con las rutas principales y sus componentes.
+ * Cada objeto representa una ruta hija que se renderiza dentro del `Outlet`
+ * del componente padre `Home`.
+ * @type {import('react-router').Router}
+ */
 const router = createBrowserRouter([
   {
     path: "/",
@@ -76,4 +94,10 @@ function App() {
   );
 }
 
+/**
+ * Componente raíz de la aplicación.
+ * Envuelve a la aplicación con el proveedor de tema y monta el router.
+ *
+ * @returns {JSX.Element} Elemento raíz que renderiza la aplicación.
+ */
 export default App;

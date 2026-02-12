@@ -10,7 +10,17 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
+/**
+ * ListadoMuelles (Cards)
+ * Versión en cards del listado de muelles. Muestra información resumen
+ * en tarjetas con imagen, permite paginar, editar y borrar.
+ *
+ * - Realiza peticiones paginadas a `muelleService.getFiltered`.
+ * - Usa `TablePagination` para controlar `page` y `rowsPerPage`.
+ * - Muestra un `Dialog` de confirmación antes de borrar un muelle.
+ *
+ * @returns {JSX.Element} Grid de tarjetas con los muelles.
+ */
 const ListadoMuelles = () => {
     const navigate = useNavigate();
 
@@ -28,7 +38,7 @@ const ListadoMuelles = () => {
         async function cargarMuelles() {
             try {
                 setLoading(true);
-
+                // Calcular offset para paginación en la API
                 const offset = page * rowsPerPage;
                 const data = await muelleService.getFiltered({
                     limit: rowsPerPage,
@@ -36,6 +46,7 @@ const ListadoMuelles = () => {
                     order: 'id_muelle:ASC'
                 });
 
+                // `rows` contiene los items actuales y `count` el total
                 setMuelles(data.rows);
                 setTotalRows(data.count);
             } catch (err) {
@@ -57,6 +68,7 @@ const ListadoMuelles = () => {
             // Actualizamos los datos de muelles sin el que hemos borrado
             setMuelles(muelles.filter(p => p.id_muelle !== idToDelete));
         } catch (error) {
+            // Mostrar notificación sencilla al usuario si falla la operación
             alert("No se pudo borrar el muelle: " + error.message);
         }
     };
@@ -72,6 +84,7 @@ const ListadoMuelles = () => {
     };
 
     const handleChangePage = (event, newPage) => {
+        // Cambiar la página activa; el efecto recargará la lista
         setPage(newPage);
     };
 

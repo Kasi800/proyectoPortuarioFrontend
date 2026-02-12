@@ -6,7 +6,19 @@ import {
     Paper, Typography, Grid, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle
 } from "@mui/material";
-
+/**
+ * FormularioPuerto
+ * Componente responsable de crear y editar puertos.
+ * - Si existe `id` en la ruta, carga el puerto y rellena el formulario.
+ * - Envía los datos a `puertoService.create` o `puertoService.update`.
+ * - Muestra feedback mediante un `Dialog` con el resultado de la operación.
+ *
+ * Estado principal:
+ * @property {Object} formData - Datos del formulario (nombre, ciudad, pais, etc.)
+ * @property {Object} feedback - Control del diálogo de resultado/errores
+ *
+ * @returns {JSX.Element} Formulario para crear/editar puertos.
+ */
 const FormularioPuerto = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -40,6 +52,7 @@ const FormularioPuerto = () => {
                     delete data.id_puerto;
                     setFormData(data);
                 } catch (error) {
+                    // Mostrar diálogo de error si la carga falla
                     setFeedback({
                         open: true,
                         title: 'Ha ocurrido un error',
@@ -54,12 +67,12 @@ const FormularioPuerto = () => {
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+        // Actualiza el campo correspondiente del formulario. Los checkbox
+        // usan la propiedad `checked`, el resto `value`.
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
-        console.log(formData);
-
     };
 
     const handleSubmit = async (e) => {
@@ -83,6 +96,7 @@ const FormularioPuerto = () => {
                 });
             }
         } catch (error) {
+            // Mostrar diálogo con el error devuelto por la API
             setFeedback({
                 open: true,
                 title: 'Ha ocurrido un error',

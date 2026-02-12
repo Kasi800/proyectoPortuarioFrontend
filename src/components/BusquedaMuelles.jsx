@@ -14,6 +14,21 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 
+
+/**
+ * BusquedaMuelles
+ * Componente para búsqueda parametrizada de muelles. Permite filtrar por
+ * puerto y estado operativo y muestra los resultados en una tabla con
+ * acciones para editar y eliminar.
+ *
+ * Comportamiento importante:
+ * - Carga la lista de puertos para el filtro al montar el componente.
+ * - `handleSearch` construye los `params` opcionales y llama a
+ *   `muelleService.getFiltered(params)`.
+ * - Muestra un `Dialog` de confirmación antes de borrar un muelle.
+ *
+ * @returns {JSX.Element} Interfaz de búsqueda y tabla de resultados.
+ */
 const BusquedaMuelles = () => {
     const navigate = useNavigate();
 
@@ -38,6 +53,7 @@ const BusquedaMuelles = () => {
                 const data = await puertoService.getAll();
                 setListaPuertos(data.rows);
             } catch (error) {
+                // Registrar error en la carga de puertos para depuración
                 console.error("Error cargando puertos", error);
             }
         }
@@ -45,6 +61,7 @@ const BusquedaMuelles = () => {
     }, []);
 
     const handleChange = (e) => {
+        // Actualizar el objeto `filtros` a partir de los inputs del formulario
         setFiltros({
             ...filtros,
             [e.target.name]: e.target.value
@@ -57,18 +74,23 @@ const BusquedaMuelles = () => {
         try {
             const params = {};
 
+            // Sólo añadimos parámetros que tengan valor para no saturar la
+            // query con campos vacíos.
             if (filtros.id_puerto) params.id_puerto = filtros.id_puerto;
             if (filtros.fecha_construccion_min) params.fecha_construccion_min = filtros.fecha_construccion_min;
             if (filtros.fecha_construccion_max) params.fecha_construccion_max = filtros.fecha_construccion_max;
 
             if (filtros.operativo !== 'todos') {
+                // Convertir a booleano sólo cuando el filtro no es 'todos'
                 params.operativo = filtros.operativo === 'si';
             }
 
+            // Llamada al servicio con los parámetros construidos dinámicamente
             const response = await muelleService.getFiltered(params);
             setResultados(response.rows);
 
         } catch (error) {
+            // Registrar y limpiar resultados en caso de fallo
             console.error(error);
             setResultados([]);
         } finally {
@@ -77,6 +99,7 @@ const BusquedaMuelles = () => {
     };
 
     const limpiarFiltros = () => {
+        // Resetear filtros y estado relacionado con la búsqueda
         setFiltros({ id_puerto: '', operativo: 'todos' });
         setResultados([]);
         setBusquedaRealizada(false);
@@ -91,6 +114,7 @@ const BusquedaMuelles = () => {
             // Actualizamos los datos de muelles sin el que hemos borrado
             setResultados(resultados.filter(p => p.id_muelle !== idToDelete));
         } catch (error) {
+            // Informar al usuario si la eliminación falla
             alert("No se pudo borrar el muelle: " + error.message);
         }
     };
