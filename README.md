@@ -2,7 +2,9 @@
 
 ## 🚀 Enlaces Rápidos
 * **Frontend:** [puerto-api-frontend](https://github.com/Kasi800/proyectoPortuarioFrontend)
+* **Frontend URL:** [Enlace](http://frontend-portuario.s3-website-us-east-1.amazonaws.com/)
 * **Backend API:** [puerto-api-backend](https://github.com/Kasi800/proyectoPortuario)
+* **Backend URL:** [Enlace](http://44.199.60.104:3000/)
 
 Desarrollado por [Pablo Plazuelo](https://github.com/Kasi800)
 
